@@ -36,7 +36,7 @@ interface MutableViewStyle {
 }
 
 import Triangle from './Triangle';
-import { ScreenWidth, ScreenHeight, isIOS } from './helpers';
+import { ScreenWidth, ScreenHeight, isIOS, statusBarOffset } from './helpers';
 import getTooltipCoordinate from './getTooltipCoordinate';
 
 export type ActionType = 'press' | 'longPress' | 'none';
@@ -210,12 +210,12 @@ const Tooltip: React.FC<TooltipProps> = ({
     const pastMiddleLine = yOffset > y;
 
     if (typeof height !== 'number' && pastMiddleLine) {
-      tooltipStyle.bottom = ScreenHeight - y;
+      tooltipStyle.bottom = ScreenHeight - y - statusBarOffset;
       tooltipStyle.top = undefined;
     } else if (typeof height === 'number' && pastMiddleLine) {
-      tooltipStyle.top = y - height;
+      tooltipStyle.top = y - height + statusBarOffset;
     } else {
-      tooltipStyle.top = y;
+      tooltipStyle.top = y + statusBarOffset;
     }
 
     return { tooltipStyle: tooltipStyle as ViewStyle, pastMiddleLine };
@@ -237,7 +237,9 @@ const Tooltip: React.FC<TooltipProps> = ({
         <View
           style={{
             position: 'absolute',
-            top: pastMiddleLine ? yOffset - 13 : yOffset + elementHeight - 2,
+            top: pastMiddleLine
+              ? yOffset + statusBarOffset - 13
+              : yOffset + statusBarOffset + elementHeight - 2,
             left: I18nManager.isRTL
               ? undefined
               : xOffset + elementWidth / 2 - 7.5,
@@ -280,7 +282,7 @@ const Tooltip: React.FC<TooltipProps> = ({
           <View
             style={{
               position: 'absolute',
-              top: yOffset,
+              top: yOffset + statusBarOffset,
               left: I18nManager.isRTL ? undefined : xOffset,
               right: I18nManager.isRTL ? xOffset : undefined,
               backgroundColor: highlightColor,

@@ -58,7 +58,7 @@ const getTooltipCoordinate = (
   receivedTooltipWidth: number | string,
   withPointer: boolean
 ): TooltipCoord => {
-  const screenDims = Dimensions.get('screen');
+  const screenDims = Dimensions.get('window');
 
   const tooltipWidth = convertDimensionToNumber(
     receivedTooltipWidth,
