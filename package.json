@@ -1,6 +1,6 @@
 {
   "name": "react-native-easy-tooltip",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight and easy-to-use tooltip component for React Native with smart positioning, RTL support, and customizable styling",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
