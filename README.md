@@ -11,7 +11,7 @@ A lightweight and easy-to-use tooltip component for React Native with **smart au
 - **TypeScript** — Full type definitions included
 - **Lightweight** — Zero native dependencies, pure JS implementation
 
-![react-native-easy-tooltip-recording](https://github.com/user-attachments/assets/a189dd84-0994-4626-9e68-3e9c5a3589a1)
+![react-native-easy-tooltip-recording](./src/assets/react-native-easy-tooltip-recording.gif)
 
 ## Installation
 
