@@ -39,44 +39,160 @@ import Triangle from './Triangle';
 import { ScreenWidth, ScreenHeight, isIOS, statusBarOffset } from './helpers';
 import getTooltipCoordinate from './getTooltipCoordinate';
 
+/**
+ * Defines how the tooltip should be triggered
+ * - 'press': Tooltip appears when user taps once
+ * - 'longPress': Tooltip appears when user holds the tap
+ * - 'none': Tooltip won't appear on touch (use isVisible prop to control it manually)
+ */
 export type ActionType = 'press' | 'longPress' | 'none';
 
+/**
+ * Props for the Tooltip component
+ */
 export interface TooltipProps {
-  /** The element that the tooltip wraps around */
+  /**
+   * Required. The element that will trigger the tooltip when interacted with.
+   * This can be any React component like a button, text, icon, etc.
+   * @example <Tooltip><Text>Click me</Text></Tooltip>
+   */
   children: ReactNode;
-  /** Content to show inside the tooltip popover */
+
+  /**
+   * Optional. The content shown inside the tooltip popup.
+   * Can be any React element like Text, View, Image, etc.
+   * @default undefined
+   * @example popover={<Text>Hello from tooltip!</Text>}
+   */
   popover?: ReactElement;
-  /** Whether to show a pointer/arrow on the tooltip */
+
+  /**
+   * Optional. Show or hide the arrow/pointer that points to the trigger element.
+   * Set to false if you want a tooltip without the arrow.
+   * @default true
+   */
   withPointer?: boolean;
-  /** Height of the tooltip container */
+
+  /**
+   * Optional. The height of the tooltip box.
+   * Can be a number (in pixels) or a string ('auto', '50%', etc.)
+   * @default 40
+   * @example height={100} or height="auto"
+   */
   height?: number | string;
-  /** Width of the tooltip container */
+
+  /**
+   * Optional. The width of the tooltip box.
+   * Can be a number (in pixels) or a string ('auto', '80%', etc.)
+   * @default 150
+   * @example width={200} or width="auto"
+   */
   width?: number | string;
-  /** Custom styles for the tooltip container */
+
+  /**
+   * Optional. Custom styles to apply to the tooltip container.
+   * Use this to customize the look of the tooltip (padding, borders, shadows, etc.)
+   * @default {}
+   * @example containerStyle={{ borderRadius: 15, padding: 20 }}
+   */
   containerStyle?: StyleProp<ViewStyle>;
-  /** Color of the pointer/arrow */
+
+  /**
+   * Optional. The color of the arrow/pointer.
+   * If not provided, it will match the backgroundColor.
+   * @default undefined (uses backgroundColor)
+   * @example pointerColor="#FF5733"
+   */
   pointerColor?: string;
-  /** Custom styles for the pointer/arrow */
+
+  /**
+   * Optional. Custom styles for the arrow/pointer.
+   * Use this to adjust the pointer's appearance.
+   * @default {}
+   * @example pointerStyle={{ borderBottomWidth: 15 }}
+   */
   pointerStyle?: StyleProp<ViewStyle>;
-  /** Callback when the tooltip is closed */
+
+  /**
+   * Optional. Function called when the tooltip is closed/hidden.
+   * Useful for cleanup or tracking purposes.
+   * @default () => {}
+   * @example onClose={() => console.log('Tooltip closed')}
+   */
   onClose?: () => void;
-  /** Callback when the tooltip is opened */
+
+  /**
+   * Optional. Function called when the tooltip is opened/shown.
+   * Useful for analytics or triggering other actions.
+   * @default () => {}
+   * @example onOpen={() => console.log('Tooltip opened')}
+   */
   onOpen?: () => void;
-  /** Whether to show an overlay behind the tooltip */
+
+  /**
+   * Optional. Show a dimmed overlay behind the tooltip.
+   * When true, the rest of the screen will be slightly darkened.
+   * @default true
+   */
   withOverlay?: boolean;
-  /** Color of the overlay */
+
+  /**
+   * Optional. The color of the overlay background.
+   * Only applies when withOverlay is true.
+   * @default 'rgba(250, 250, 250, 0.70)'
+   * @example overlayColor="rgba(0, 0, 0, 0.5)"
+   */
   overlayColor?: string;
-  /** Background color of the tooltip container */
+
+  /**
+   * Optional. The background color of the tooltip box.
+   * @default '#617080'
+   * @example backgroundColor="#333333"
+   */
   backgroundColor?: string;
-  /** Highlight color for the wrapped element when tooltip is visible */
+
+  /**
+   * Optional. Background color applied to the trigger element when tooltip is visible.
+   * Use this to highlight what triggered the tooltip.
+   * @default 'transparent'
+   * @example highlightColor="rgba(255, 255, 0, 0.3)"
+   */
   highlightColor?: string;
-  /** Props to pass to the TouchableOpacity wrapper */
+
+  /**
+   * Optional. Additional props to pass to the TouchableOpacity that wraps the children.
+   * Use this to customize the touchable behavior (activeOpacity, testID, etc.)
+   * @default {}
+   * @example toggleWrapperProps={{ testID: 'tooltip-trigger' }}
+   */
   toggleWrapperProps?: TouchableOpacityProps;
-  /** How to trigger the tooltip: 'press', 'longPress', or 'none' */
+
+  /**
+   * Optional. How the user should trigger the tooltip.
+   * - 'press': Single tap to toggle
+   * - 'longPress': Hold to show tooltip
+   * - 'none': Don't respond to touches (control with isVisible prop)
+   * @default 'press'
+   * @example actionType="longPress"
+   */
   actionType?: ActionType;
-  /** Control tooltip visibility externally */
+
+  /**
+   * Optional. Control the tooltip visibility from outside (controlled mode).
+   * When provided, the component becomes "controlled" and you manage visibility.
+   * Leave undefined to let the component manage its own visibility (uncontrolled mode).
+   * @default undefined
+   * @example isVisible={showTooltip}
+   */
   isVisible?: boolean;
-  /** Callback when visibility changes (for controlled mode) */
+
+  /**
+   * Optional. Callback when visibility changes in controlled mode.
+   * Use together with isVisible to create a controlled component.
+   * The function receives the new visibility state as a parameter.
+   * @default undefined
+   * @example onVisibilityChange={(visible) => setShowTooltip(visible)}
+   */
   onVisibilityChange?: (visible: boolean) => void;
 }
 
